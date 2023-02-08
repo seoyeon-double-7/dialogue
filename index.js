@@ -11,6 +11,8 @@ app.use(express.urlencoded({ extended: true }));
 const port = 5000;
 
 const bodyParser = require("body-parser");
+const config = require("./congif/key");
+
 const { User } = require("./models/User");
 
 // application/json
@@ -20,10 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 
 const mongoose = require("mongoose");
 mongoose
-  .connect(
-    "mongodb+srv://seoyeon:test1234@youtubeclone.lempazh.mongodb.net/?retryWrites=true&w=majority",
-    {}
-  )
+  .connect(config.mongoURI, {})
   .then(() => console.log("MongoDB Connected.."))
   .catch((err) => console.log(err));
 
