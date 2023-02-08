@@ -29,7 +29,7 @@ mongoose
 
 // 루트 디렉토리에 'Hello world' 출력
 app.get("/", (req, res) => {
-  res.send("Hello World! 하이염");
+  res.send("Hello World! 안녕~");
 });
 
 app.post("/register", (req, res) => {
@@ -42,6 +42,7 @@ app.post("/register", (req, res) => {
     return res.status(200).json({
       success: true,
     });
+    d;
   });
 });
 
