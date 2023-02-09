@@ -1,26 +1,16 @@
-// express 모듈 가져오기
 const express = require("express");
-
-// app 만들기
 const app = express();
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// 포트 번호 만들기
 const port = 5000;
-
-const bodyParser = require("body-parser");
-const config = require("./congif/key");
-
 const { User } = require("./models/User");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const config = require("./config/key");
 
-// application/json
+// application/json으로된 데이터를 가져와서 분석할수있게 하는 코드
 app.use(express.json());
-// application/x-www-form-urlencoded
+// application/x-www-form-urlencoded 이런식으로 된 데이터를 가져와서 분석해주는 코드
 app.use(express.urlencoded({ extended: true }));
 
-const mongoose = require("mongoose");
 mongoose
   .connect(config.mongoURI, {})
   .then(() => console.log("MongoDB Connected.."))
@@ -41,7 +31,6 @@ app.post("/register", (req, res) => {
     return res.status(200).json({
       success: true,
     });
-    d;
   });
 });
 
