@@ -57,5 +57,15 @@ userSchema.pre("save", function (next) {
   }
 });
 
+userSchema.methods.comparePassword = function (plainPassword, eb) {
+  // plainPassword (사용자가 입력한 비번) vs 암호화된 비번
+  bcrypt.compare(plainPassword, this.password, function (err, isMatch) {
+    // 사용자가 입력한 비번(plainPassword)와 db에 저장된 비번과 비교
+    // 틀리고, 에러가 나면 콜백함수에 err를 반환하고,
+    // 같다면 콜백함수에 null값과 true값이 있는 isMatch를 반환
+    if (err) return cb(err), cb(null, isMatch);
+  });
+};
+
 const User = mongoose.model("User", userSchema);
 module.exports = { User };

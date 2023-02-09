@@ -34,6 +34,30 @@ app.post("/register", (req, res) => {
   });
 });
 
+app.post("/login", (req, res) => {
+  // 요청된 이메일틀 데이터베이스에서 있는지 찾아보기
+  // findOne() : 요소를 찾는 몽고DB 메소드
+  User.findOne({ email: req.body.email }, (err, user) => {
+    // 이메일에 해당하는 유저가 없으면
+    if (!user) {
+      return res.json({
+        loginSuccess: false,
+        message: "제공된 이메일에 해당하는 유저가 없습니다.",
+      });
+    }
+    // 요청된 이메일이 데이터베이스에 있다면 비밀번호가 맞는 비밀번호인지 확인
+    user.comparePassword(req.body.password, (err, isMatch) => {
+      // isMatch가 없으면 비번이 틀림
+      if (isMatch)
+        return res.json({
+          loginSuccess: false,
+          message: "비밀번호가 틀렸습니다.",
+        });
+      // 비밀번호까지 맞다면 토큰 생성
+    });
+  });
+});
+
 // 포트에서 앱 실행하게 함
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
