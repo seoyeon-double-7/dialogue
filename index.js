@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
   res.send("Hello World! 안녕~");
 });
 
-app.post("api/users/register", (req, res) => {
+app.post("/api/users/register", (req, res) => {
   // 회원 가입할때 필요한 정보들을 client에서 가져오면
   // 그것들을 데이터 베이스에 넣어줌
 
@@ -91,4 +91,14 @@ app.get("/api/users/auth", auth, (req, res) => {
 // 포트에서 앱 실행하게 함
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
+});
+
+app.get("/api/users/logout", auth, (req, res) => {
+  // 로그 아웃하려는 유저 찾고 업데이트
+  User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, user) => {
+    if (err) return res.json({ success: false, err });
+    return res.status(200).send({
+      success: true,
+    });
+  });
 });
