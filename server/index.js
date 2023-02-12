@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = 5000;
+
 const { User } = require("./models/User");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -92,11 +92,6 @@ app.get("/api/users/auth", auth, (req, res) => {
   });
 });
 
-// 포트에서 앱 실행하게 함
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
-
 app.get("/api/users/logout", auth, (req, res) => {
   // 로그 아웃하려는 유저 찾고 업데이트
   User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, user) => {
@@ -105,4 +100,11 @@ app.get("/api/users/logout", auth, (req, res) => {
       success: true,
     });
   });
+});
+
+const port = 5000;
+
+// 포트에서 앱 실행하게 함
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
 });
