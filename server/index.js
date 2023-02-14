@@ -1,12 +1,12 @@
 const express = require("express");
 const app = express();
-const port = 5000;
-const { User } = require("./server/models/User");
+
+const { User } = require("./models/User");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const config = require("./config/key");
-const { auth } = require("./server/middleware/auth");
+const { auth } = require("./middleware/auth");
 
 // application/json으로된 데이터를 가져와서 분석할수있게 하는 코드
 app.use(express.json());
@@ -22,6 +22,10 @@ mongoose
 // 루트 디렉토리에 'Hello world' 출력
 app.get("/", (req, res) => {
   res.send("Hello World! 안녕~");
+});
+
+app.get("/api/hello", (req, res) => {
+  res.send("안녕하세요");
 });
 
 app.post("/api/users/register", (req, res) => {
@@ -88,11 +92,6 @@ app.get("/api/users/auth", auth, (req, res) => {
   });
 });
 
-// 포트에서 앱 실행하게 함
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
-
 app.get("/api/users/logout", auth, (req, res) => {
   // 로그 아웃하려는 유저 찾고 업데이트
   User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, user) => {
@@ -101,4 +100,11 @@ app.get("/api/users/logout", auth, (req, res) => {
       success: true,
     });
   });
+});
+
+const port = 5000;
+
+// 포트에서 앱 실행하게 함
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
 });
