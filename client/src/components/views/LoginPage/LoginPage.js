@@ -31,7 +31,7 @@ function LoginPage() {
         // props.history.push("/");
         navigate("/");
       } else {
-        alert("Error˝");
+        alert(response.payload.message);
       }
     });
   };
