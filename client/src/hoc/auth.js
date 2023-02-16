@@ -14,6 +14,7 @@ export default function f(SpecificComponent, option, adminRoute = null) {
 
     useEffect(() => {
       dispatch(auth()).then((response) => {
+        console.log(`${response.payload.name}님 안녕하세요`);
         console.log(response);
       });
     }, []);
